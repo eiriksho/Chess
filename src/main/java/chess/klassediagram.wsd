@@ -1,0 +1,99 @@
+@startuml Klassediagram
+abstract class Piece {
+    -boolean color
+    -boolean isMoved
+    -char type
+    -Image image
+    +boolean getColor()
+    +void setColor(boolean)
+    +boolean getIsMoved()
+    +void setIsMoved(boolean)
+    +char getType()
+    +void setType(char)
+    +Image getImage()
+    +void setImage(Image)
+    +boolean canCheck(Square, Square)
+    +boolean canMove(Square, Square)
+    +boolean isCheck(boolean, Board)
+    +boolean isCheckMate(Square)
+    +boolean isStaleMate(Square[][], boolean)
+    +boolean validMove(Square, Square)
+    #abstract boolean isPieceLegit(Square, Square)
+    #abstract boolean isNotOccupied(Square, Square)
+    +boolean changeToQueen(Square)
+    +boolean castling(Square, Square)
+}
+
+class Square{
+    -Board board
+    -Piece piece
+    -int x
+    -int y
+    +Board getBoard()
+    +void setBoard(Board)
+    +Piece getPiece()
+    +void setPiece(Piece)
+    +int getX()
+    +int getY()
+}
+class Board {
+    -Square[][] board
+    -boolean turn
+    -Square blackKing
+    -Square whiteKing
+    +Square[][] getBoard()
+    +void setTurn(boolean)
+    +boolean getTurn()
+    +void setBlackKing(Square)
+    +Square getBlackKing()
+    +void setWhiteKing(Square)
+    +Square getWhiteKing()
+    +String move(Square, Square)
+}
+
+interface FileTreatement{
+    +void save(Board)
+    +Board load()
+}
+
+class FileTreater {
++static int countLineNumberReader(String)
+}
+class Controller{
+    -Object image1
+    -Object image2
+    -boolean first
+    -Board board
+    -Square coord1
+    -Square coord2
+    -FileTreater fileTreater
+}
+
+class SquareIterator{
+    -int xCoord
+    -int yCoord
+    +boolean hasNext()
+    +Square next()
+}
+
+class Pawn
+class Rook
+class Bishop
+class Knight
+class King
+class Queen
+
+Piece <|- Pawn
+Piece <|- Rook
+Piece <|- Bishop
+Piece <|- Knight
+Piece <|- King
+Piece <|- Queen
+Square --> "Piece: 1" Piece
+Square "Squares: 64" -- "Board: 1" Board
+Controller --> Board
+Controller --> FileTreater
+Square --> SquareIterator
+FileTreater ..|> FileTreatement
+
+@enduml
